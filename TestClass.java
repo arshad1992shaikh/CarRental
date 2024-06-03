@@ -1,14 +1,15 @@
 package management;
 
-import java.time.LocalDate;
+import java.time.LocalDate; //This line imports the LocalDate class from the java.time package, which is used to represent dates in the test class.
 
-public class TestClass {
+public class TestClass {//This line begins the definition of the TestClass class.
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {//This line begins the definition of the main method, which is the entry point of the test class.
+        // This field calls the method to test the class.
         testCar();
         testCustomer();
         testRental();
-        testInvalidOperations();
+        testInvalidOperations();// This line calls the testInvalidOperations method to test invalid operations in the car rental system
         testCarRentalService();
     }
 
