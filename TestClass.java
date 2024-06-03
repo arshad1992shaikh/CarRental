@@ -14,7 +14,7 @@ public class TestClass {
 
     public static void testCar() {
         Car car = new Car("ABC123", "Toyota", "Corolla", 2020, true);
-        System.out.println("Testing Car class...");
+        System.out.println("Output of Car class...");
         System.out.println("License Plate: " + car.getLicensePlate());
         System.out.println("Brand: " + car.getBrand());
         System.out.println("Model: " + car.getModel());
@@ -31,7 +31,7 @@ public class TestClass {
 
     public static void testCustomer() {
         Customer customer = new Customer("123", "John Doe", "john.doe@example.com");
-        System.out.println("Testing Customer class...");
+        System.out.println("Output of Customer class...");
         System.out.println("Customer ID: " + customer.getCustomerId());
         System.out.println("Name: " + customer.getName());
         System.out.println("Email: " + customer.getEmail());
@@ -46,7 +46,7 @@ public class TestClass {
     }
     
     public static void testCarRentalService() {
-        System.out.println("Testing CarRentalService class...");
+        System.out.println("Output of CarRentalService class...");
         CarRentalService service = new CarRentalService();
 
         // Adding cars
@@ -85,7 +85,7 @@ public class TestClass {
         Car car = new Car("ABC123", "Toyota", "Corolla", 2020, true);
         Customer customer = new Customer("123", "John Doe", "john.doe@example.com");
         Rental rental = new Rental(car, customer, LocalDate.now());
-        System.out.println("Testing Rental class...");
+        System.out.println("Output of Rental class...");
         System.out.println("Car: " + rental.getCar().getLicensePlate());
         System.out.println("Customer: " + rental.getCustomer().getCustomerId());
         System.out.println("Rental Date: " + rental.getRentalDate());
@@ -97,7 +97,7 @@ public class TestClass {
     }
 
     public static void testInvalidOperations() {
-        System.out.println("Testing invalid operations...");
+        System.out.println("Output of invalid operations...");
         Car car = new Car("ABC123", "Toyota", "Corolla", 2020, true);
         Customer customer = new Customer("123", "John Doe", "john.doe@example.com");
 
