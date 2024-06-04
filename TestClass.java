@@ -123,7 +123,7 @@ public class TestClass {
         // Mark the car as rented before attempting to rent it again
         car.markAsRented();
         try {
-            new Rental(car, customer, LocalDate.now()); // Try renting the car again
+            Rental rental = new Rental(car, customer, LocalDate.now()); // Try renting the car again
             System.out.println("Error: Should not be able to rent a car that the customer has already rented");
         } catch (Exception e) {
             System.out.println("Success: Cannot rent a car that the customer has already rented");
