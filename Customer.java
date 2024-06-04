@@ -7,13 +7,15 @@ public class Customer {
     private String customerId;
     private String name;
     private String email;
+    private String phoneNumber; // New field
     private List<Car> rentedCars;
 
-    public Customer(String customerId, String name, String email) {
+    public Customer(String customerId, String name, String email,String phoneNumber) {
         setCustomerId(customerId);
         setName(name);
         setEmail(email);
-        this.rentedCars = new ArrayList<>();
+        setPhoneNumber(phoneNumber); // Set the phone number with validation
+        this.rentedCars = new ArrayList<>();//
     }
 
     public String getCustomerId() {
@@ -27,7 +29,10 @@ public class Customer {
     public String getEmail() {
         return email;
     }
-
+   
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
     public void addRentedCar(Car car) {
         if (getRentedCars().contains(car)) {
             throw new IllegalArgumentException("Customer has already rented this car.");
@@ -58,6 +63,12 @@ public class Customer {
             throw new IllegalArgumentException("Email must contain an '@' symbol.");
         }
         this.email = email;
+    }
+    private void setPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.isEmpty() || !phoneNumber.matches("\\+?[0-9]*")) {
+            throw new IllegalArgumentException("Phone number cannot be null, empty, and must contain only digits (and optionally start with '+').");
+        }
+        this.phoneNumber = phoneNumber;
     }
 
 	/**

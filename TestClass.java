@@ -1,24 +1,25 @@
 package management;
 
-import java.time.LocalDate; //This line imports the LocalDate class from the java.time package, which is used to represent dates in the test class.
+import java.time.LocalDate;
 
-public class TestClass {//This line begins the definition of the TestClass class.
+public class TestClass {
 
-    public static void main(String[] args) {//This line begins the definition of the main method, which is the entry point of the test class.
-        // This field calls the method to test the class.
+    public static void main(String[] args) {
         testCar();
         testCustomer();
         testRental();
-        testInvalidOperations();// This line calls the testInvalidOperations method to test invalid operations in the car rental system
+        testInvalidOperations();
         testCarRentalService();
     }
 
     public static void testCar() {
-        Car car = new Car("ABC123", "Toyota", "Corolla", 2020, true);
-        System.out.println("Output of Car class...");
+        Car car = new Car("ABC123", "Toyota", "Corolla","Black", 2020, true);
+        
+        System.out.println("Testing Car class...");
         System.out.println("License Plate: " + car.getLicensePlate());
         System.out.println("Brand: " + car.getBrand());
         System.out.println("Model: " + car.getModel());
+        System.out.println("Color: " + car.getColor());
         System.out.println("Year: " + car.getYear());
         System.out.println("Availability: " + car.isAvailable());
         car.markAsRented();
@@ -28,15 +29,31 @@ public class TestClass {//This line begins the definition of the TestClass class
         System.out.println("Marking car as returned...");
         System.out.println("Availability: " + car.isAvailable());
         System.out.println();
+        
+        Car car2 = new Car("zxw123", "tata", "nano","Red", 2024, true);
+        System.out.println("Testing Car class...");
+        System.out.println("License Plate: " + car2.getLicensePlate());
+        System.out.println("Brand: " + car2.getBrand());
+        System.out.println("Model: " + car2.getModel());
+        System.out.println("Year: " + car2.getYear());
+        System.out.println("Availability: " + car2.isAvailable());
+        car2.markAsRented();
+        System.out.println("Marking car as rented...");
+        System.out.println("Availability: " + car.isAvailable());
+        car2.markAsReturned();
+        System.out.println("Marking car as returned...");
+        System.out.println("Availability: " + car2.isAvailable());
+        System.out.println();
     }
 
     public static void testCustomer() {
-        Customer customer = new Customer("123", "John Doe", "john.doe@example.com");
-        System.out.println("Output of Customer class...");
+        Customer customer = new Customer("123", "John Doe", "john.doe@example.com","+1234567890");
+        System.out.println("Testing Customer class...");
         System.out.println("Customer ID: " + customer.getCustomerId());
         System.out.println("Name: " + customer.getName());
         System.out.println("Email: " + customer.getEmail());
-        Car car = new Car("ABC123", "Toyota", "Corolla", 2020, true);
+        System.out.println("Phone Number: " + customer.getPhoneNumber());
+        Car car = new Car("ABC123", "Toyota", "Corolla","Black", 2020, true);
         customer.addRentedCar(car);
         System.out.println("Adding car to customer's rented cars...");
         System.out.println("Rented cars: " + customer.getRentedCars().size());
@@ -47,46 +64,46 @@ public class TestClass {//This line begins the definition of the TestClass class
     }
     
     public static void testCarRentalService() {
-        System.out.println("Output of CarRentalService class...");
+        System.out.println("Testing CarRentalService class...");
         CarRentalService service = new CarRentalService();
-
-        // Adding cars
-        Car car1 = new Car("ABC123", "Toyota", "Corolla", 2020, true);
-        Car car2 = new Car("XYZ789", "Honda", "Civic", 2019, true);
-        service.addCar(car1);
+        Car car = new Car("ABC123", "Corolla", "Toyota","Black", 2020, true);
+        Car car2 = new Car("zxw123", "tata", "nano","Red", 2024, true);
+        Customer customer = new Customer("123", "John Doe", "john.doe@example.com","+1234567890");
+        service.addCar(car);
         service.addCar(car2);
+        service.addCustomer(customer);
+        LocalDate rentalDate = LocalDate.now();
+        Rental rental = service.rentCar("ABC123", "123", rentalDate);
+        System.out.println("Car rented: " + rental.getCar().getLicensePlate());
 
-        // Adding customers
-        Customer customer1 = new Customer("123", "John Doe", "john.doe@example.com");
-        Customer customer2 = new Customer("456", "Jane Smith", "jane.smith@example.com");
-        service.addCustomer(customer1);
-        service.addCustomer(customer2);
-
-        // Renting a car
-        Rental rental1 = service.rentCar("ABC123", "123", LocalDate.now());
-        System.out.println("Car rented: " + rental1.getCar().getLicensePlate());
-
-        // Trying to rent the same car again (should fail)
+        // Attempt to rent the same car again
         try {
-            service.rentCar("ABC123", "456", LocalDate.now());
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            service.rentCar("ABC123", "123", rentalDate);
+            System.out.println("Error: Car is already rented.");
+        } catch (IllegalStateException e) {
+            System.out.println("Success: Car is already rented.");
         }
 
-        // Returning the car
-        service.returnCar("ABC123", LocalDate.now().plusDays(3));
+        // Return the car
+        service.returnCar("ABC123", rentalDate.plusDays(3));
         System.out.println("Car returned.");
 
-        // Renting the car again (should succeed)
-        Rental rental2 = service.rentCar("ABC123", "456", LocalDate.now());
-        System.out.println("Car rented again: " + rental2.getCar().getLicensePlate());
-        }
+        // Rent the car again
+        rental = service.rentCar("ABC123", "123", rentalDate);
+        System.out.println("Rental period extended to: " + rental.getCar().getLicensePlate());
+
+        // Extend the rental period
+        LocalDate newReturnDate = rentalDate.plusDays(7);
+        service.extendRentalPeriod("ABC123", newReturnDate);
+        System.out.println("Rental period extended to: " + newReturnDate);
+    }
 
     public static void testRental() {
-        Car car = new Car("ABC123", "Toyota", "Corolla", 2020, true);
-        Customer customer = new Customer("123", "John Doe", "john.doe@example.com");
+    	
+        Car car = new Car("ABC123","Toyota", "Corolla","Black", 2020, true);
+        Customer customer = new Customer("123", "John Doe", "john.doe@example.com","+1234567890");
         Rental rental = new Rental(car, customer, LocalDate.now());
-        System.out.println("Output of Rental class...");
+        System.out.println("Testing Rental class...");
         System.out.println("Car: " + rental.getCar().getLicensePlate());
         System.out.println("Customer: " + rental.getCustomer().getCustomerId());
         System.out.println("Rental Date: " + rental.getRentalDate());
@@ -98,9 +115,10 @@ public class TestClass {//This line begins the definition of the TestClass class
     }
 
     public static void testInvalidOperations() {
-        System.out.println("Output of invalid operations...");
-        Car car = new Car("ABC123", "Toyota", "Corolla", 2020, true);
-        Customer customer = new Customer("123", "John Doe", "john.doe@example.com");
+        System.out.println("Testing invalid operations...");
+        
+        Car car = new Car("ABC126", "Toyota", "Corolla","Black", 2020, true);
+        Customer customer = new Customer("123", "John Doe", "john.doe@example.com","+1234567890");
 
         // Mark the car as rented before attempting to rent it again
         car.markAsRented();

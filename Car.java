@@ -6,15 +6,19 @@ public class Car {
     private String brand;
     private int year;
     private boolean available;
+    private String color; // New field
 	
-    public Car(String licensePlate, String model, String brand, int year, boolean available) {
-		super();
+    public Car(String licensePlate, String model, String brand, String color, int year, boolean available) {
 		this.licensePlate = licensePlate;
 		this.model = model;
 		this.brand = brand;
+		this.color = color;
 		this.year = year;
 		this.available = available;
+		
 	}
+
+
 
 	public String getLicensePlate() {
 		return licensePlate;
@@ -27,6 +31,10 @@ public class Car {
 	public String getBrand() {
 		return brand;
 	}
+	
+	 public String getColor() {
+	        return color;
+	    }
 
 	public int getYear() {
 		return year;
@@ -43,14 +51,15 @@ public class Car {
 		public void markAsReturned() {
 	        setAvailable(true);
 	    }
-		 private void setLicensePlate(String licensePlate) {
+
+		private void setLicensePlate(String licensePlate) {
 		        if (licensePlate == null || licensePlate.isEmpty()) {
 		            throw new IllegalArgumentException("License plate cannot be null or empty.");
 		        }
 		        this.licensePlate = licensePlate;
 		    }
-
-		    private void setModel(String model) {
+		 
+			private void setModel(String model) {
 		        if (model == null || model.isEmpty()) {
 		            throw new IllegalArgumentException("Model cannot be null or empty.");
 		        }
@@ -62,6 +71,13 @@ public class Car {
 		            throw new IllegalArgumentException("Brand cannot be null or empty.");
 		        }
 		        this.brand = brand;
+		    }
+		    
+		    private void setColor(String color) {
+		        if (color == null || color.isEmpty()) {
+		            throw new IllegalArgumentException("Color cannot be null or empty.");
+		        }
+		        this.color = color;
 		    }
 
 		    private void setYear(int year) {
